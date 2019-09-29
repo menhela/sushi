@@ -1,0 +1,83 @@
+upstream upstream_api {
+    server unix:/var/run/nginx_api.sock;
+    server unix:/var/run/nginx_api.sock;
+    server unix:/var/run/nginx_api.sock;
+}
+
+upstream upstream_ui {
+    server unix:/var/run/nginx_ui.sock;
+    server unix:/var/run/nginx_ui.sock;
+    server unix:/var/run/nginx_ui.sock;
+}
+
+server {
+    listen       9080  default_server;
+    server_name localhost;
+
+    location / {
+        empty_gif;
+        access_log off;
+        break;
+    }
+
+    location /nginx_status {
+        stub_status on;
+        access_log off;
+    }
+}
+
+server {
+    listen       9080;
+    server_name ${DOMAIN};
+    proxy_next_upstream error timeout http_502 http_503 http_504;
+
+    location / {
+        proxy_pass http://upstream_ui;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
+
+server {
+    listen       unix:/var/run/nginx_ui.sock;
+    server_name  ${DOMAIN};
+
+    location / {
+        resolver ${RESOLVER};
+        proxy_http_version 1.1;
+        keepalive_timeout 0;
+        set $url_ui "http://ui.${GROUP_NAME}.local:1234";
+        proxy_pass $url_ui;
+    }
+}
+
+server {
+    listen       9080;
+    server_name api.${DOMAIN};
+    proxy_next_upstream error timeout http_502 http_503 http_504;
+
+    location / {
+        proxy_pass http://upstream_api;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
+
+server {
+    listen       unix:/var/run/nginx_api.sock;
+    server_name  api.${DOMAIN};
+
+    location / {
+        resolver ${RESOLVER};
+        proxy_http_version 1.1;
+        keepalive_timeout 0;
+        set $url_api "http://api.${GROUP_NAME}.local:1991";
+        proxy_pass $url_api;
+    }
+}

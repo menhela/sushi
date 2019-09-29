@@ -1,0 +1,15 @@
+{
+  "warning": {
+    "victim_name": "",
+    "victim_account_id": "@higyaisyaID_over_15_letter_limit",
+    "assaulter_name": "",
+    "assaulter_account_id": "@kagaisyaID_over_15_letter_limit"
+  },
+  "evidences": [
+    {
+      "content": "",
+      "evidence_url": ""
+    }
+  ],
+  "guilt_ids": []
+}

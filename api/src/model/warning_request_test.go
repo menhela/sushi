@@ -27,7 +27,7 @@ var normalPost string = `{
   "guilt_ids": [1, 2]
 }`
 
-var warnFailurePost string = `{
+var warnEmptyNameFailurePost string = `{
   "warning": {
     "victim_name": "",
     "victim_account_id": "@higyaisyaID",
@@ -75,6 +75,38 @@ var evidenceEmptyFailurePost string = `{
     "assaulter_account_id": "@kagaisyaID"
   },
   "evidences": [
+  ],
+  "guilt_ids": [1, 2]
+}`
+
+var evidenceExtraFailurePost string = `{
+  "warning": {
+    "victim_name": "被害者名",
+    "victim_account_id": "@higyaisyaID",
+    "assaulter_name": "加害者名",
+    "assaulter_account_id": "@kagaisyaID"
+  },
+  "evidences": [
+    {
+      "content": "「◯◯転がす」",
+      "evidence_url": "https://twitter.com"
+    },
+    {
+      "content": "「◯◯はひどい」",
+      "evidence_url": "https://youtube.com"
+    },
+    {
+      "content": "「◯◯はひどい」",
+      "evidence_url": "https://youtube.com"
+    },
+    {
+      "content": "「◯◯はひどい」",
+      "evidence_url": "https://youtube.com"
+    },
+    {
+      "content": "「◯◯はひどい」",
+      "evidence_url": "https://youtube.com"
+    }
   ],
   "guilt_ids": [1, 2]
 }`
@@ -171,9 +203,10 @@ var validate_funcTest = []struct {
 	expected  error
 }{
 	{"normal", initialize(normalPost), nil},
-	{"warn_failure", initialize(warnFailurePost), errors.New("input warning error")},
+	{"warn_no_name_failure", initialize(warnEmptyNameFailurePost), errors.New("input warning error")},
 	{"evidence_failure", initialize(evidenceFailurePost), errors.New("input evidence error")},
 	{"evidence_empty_failure", initialize(evidenceEmptyFailurePost), errors.New("no evidence error")},
+	{"evidence_extra_failure", initialize(evidenceExtraFailurePost), errors.New("extra evidence error")},
 	{"evidence_invalid_url_failure", initialize(evidenceInvalidUrlFailurePost), errors.New("invalid evidence url error")},
 	{"evidence_empty_content_failure", initialize(evidenceEmptyContentFailurePost), errors.New("input evidence error")},
 	{"evidence_empty_url_success", initialize(evidenceEmptyUrlSuccessPost), nil},

@@ -23,7 +23,7 @@ const AgreementButton = withStyles((theme) => ({
       fontSize: 20,
     },
     '&:hover': {
-      background: '#46709a',
+      background: '#46709a ',
     },
   },
 }))((props) => {

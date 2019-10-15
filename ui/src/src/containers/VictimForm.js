@@ -106,7 +106,7 @@ const VictimForm = withStyles(theme => ({
               variant="outlined"
               fullWidth
               onChange={e => onChange(e, 'assaulterTwitterId')}
-              placeholder="例) maeeeeeeeeeeee(アカウントIDは@以降です)"
+              placeholder="例) maeda(アカウントIDは@以降です)"
               defaultValue={assaulterTwitterId}
             />
           </div>

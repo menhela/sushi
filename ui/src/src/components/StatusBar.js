@@ -25,7 +25,7 @@ const StatusBar = withStyles(theme => ({
     position: 'absolute',
     width: 40,
     height: 32,
-    paddingTop: 8,
+    paddingTop: 6,
     background: '#ccc',
     borderRadius: '50%',
     zIndex: '10',

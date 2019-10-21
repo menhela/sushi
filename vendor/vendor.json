@@ -1,3 +1,6 @@
 {
-  "rootPath": "github.com/voyagegroup/treasure2019-group-c"
+  "rootPath": "https://github.com/dantehrt/smart-tsukoku/tree/master/api/src/",
+  "heroku.": {
+    "goVersion": "1.12.6"
+  }
 }

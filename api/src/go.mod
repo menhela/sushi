@@ -17,5 +17,6 @@ require (
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/pkg/errors v0.8.1
 	github.com/rs/cors v1.6.0
-	gopkg.in/go-playground/validator.v9 v9.29.1
+	github.com/stretchr/testify v1.4.0 // indirect
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )

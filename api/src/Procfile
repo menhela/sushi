@@ -1,2 +1,2 @@
-web: src
+web: bin/src
 release: goose -env production up

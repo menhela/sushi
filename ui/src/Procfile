@@ -1,2 +1,1 @@
-web: npm run build
-release: npm run dev
+web: npm run dev

@@ -6,6 +6,9 @@
     "dev": "parcel index.html",
     "build": "parcel build index.html"
   },
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
     "@material-ui/core": "^4.3.3",
     "components": "^0.1.0",

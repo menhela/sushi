@@ -2,7 +2,6 @@ module github.com/voyagegroup/treasure2019-group-c
 
 go 1.12
 
-// +heroku goVersion go1.12
 // +heroku install ./... bitbucket.org/liamstask/goose/cmd/goose
 
 require (

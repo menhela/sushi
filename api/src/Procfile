@@ -1,2 +1,2 @@
-web: api/src/app
+web: src
 release: goose -env production up

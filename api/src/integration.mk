@@ -45,5 +45,8 @@ req-warning-post:
 req-warning-post-attack:
 	curl -v -XPOST $(HOST):$(PORT)/warning -d @./resources/warning_post_attack.json
 
+req-warning-post-much-more:
+	curl -v -XPOST $(HOST):$(PORT)/warning -d @./resources/warning_post_extra.json
+
 req-guilts-get:
 	curl -v $(HOST):$(PORT)/guilts

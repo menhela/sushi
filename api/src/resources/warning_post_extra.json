@@ -1,0 +1,31 @@
+{
+  "warning": {
+    "victim_name": "被害者名",
+    "victim_account_id": "@higyaisyaID",
+    "assaulter_name": "加害者名",
+    "assaulter_account_id": "@kagaisyaID"
+  },
+  "evidences": [
+    {
+      "content": "「◯◯転がす」",
+      "evidence_url": "https://twitter.com"
+    },
+    {
+      "content": "「◯◯はひどい」",
+      "evidence_url": "https://youtube.com"
+    },
+    {
+      "content": "「◯◯はひどい」",
+      "evidence_url": "https://youtube.com"
+    },
+    {
+      "content": "「◯◯はひどい」",
+      "evidence_url": "https://youtube.com"
+    },
+    {
+      "content": "「◯◯はひどい」",
+      "evidence_url": "https://youtube.com"
+    }
+  ],
+  "guilt_ids": [1, 2]
+}

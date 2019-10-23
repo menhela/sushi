@@ -26,7 +26,9 @@ func (newWarningRequest WarningRequest) Validate() error {
 	if len(newWarningRequest.Evidences) < 1 {
 		return errors.New("no evidence error")
 	}
-
+	if len(newWarningRequest.Evidences) > 3 {
+		return errors.New("extra evidence error")
+	}
 	for i := range newWarningRequest.Evidences {
 		evidenceValidate := Evidence{
 			Content:     newWarningRequest.Evidences[i].Content,

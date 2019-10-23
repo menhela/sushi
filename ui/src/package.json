@@ -6,7 +6,14 @@
     "dev": "parcel index.html",
     "build": "parcel build index.html"
   },
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/preset-env": "^7.5.5",
     "@material-ui/core": "^4.3.3",
     "components": "^0.1.0",
     "firebase": "^6.3.1",
@@ -15,19 +22,15 @@
     "jquery": "^3.4.1",
     "jspdf": "^1.5.3",
     "material-ui": "^0.20.2",
+    "parcel-bundler": "^1.12.3",
+    "path": "^0.12.7",
     "preact": "^8.4.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-router-dom": "^5.0.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-decorators": "^7.4.4",
-    "@babel/preset-env": "^7.5.5",
-    "parcel-bundler": "^1.12.3",
+    "react-router-dom": "^5.0.1",
     "regenerator-runtime": "^0.13.3"
   },
+  "devDependencies": {},
   "plugins": [
     [
       "@babel/plugin-transform-react-jsx",

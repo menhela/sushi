@@ -2,6 +2,8 @@ module github.com/voyagegroup/treasure2019-group-c
 
 go 1.12
 
+// +heroku install ./... bitbucket.org/liamstask/goose/cmd/goose
+
 require (
 	cloud.google.com/go v0.43.0 // indirect
 	firebase.google.com/go v3.8.1+incompatible
@@ -17,5 +19,6 @@ require (
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/pkg/errors v0.8.1
 	github.com/rs/cors v1.6.0
-	gopkg.in/go-playground/validator.v9 v9.29.1
+	github.com/stretchr/testify v1.4.0 // indirect
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )

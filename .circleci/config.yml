@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/golang:1.12-stretch-node-browsers-legacy
+    working_directory: /go/src/github.com/menhela/smart-tsukoku/api/src
+    steps:
+      - checkout
+      - run: go get -v -t -d ./...
+      - run: go test -v ./...
+  # deploy:
+  #   machine:
+  #     image: circleci/classic:edge
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Deploy "API" to Heroku
+  #         command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$API_APP_NAME.git deploy_heroku:master
+  #     - run:
+  #         name: Deploy "FRONT" to Heroku
+  #         command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$FRONT_APP_NAME.git deploy_heroku:master
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - test
+      # - deploy:
+      #     requires:
+      #       - test
+      #     filters:
+      #       branches:
+      #         only: deploy_heroku

@@ -2,10 +2,14 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/golang:1.12-stretch-node-browsers-legacy
-    working_directory: ~/repo
+      - image: golang:stretch
+    working_directory: /repo
+    environment:
+      GOPATH: /
+      GO111MODULE: 'on'
     steps:
       - checkout
+      - run: go env
       - run: cd api/src && go build
       - run: go test -v ./...
   # deploy:

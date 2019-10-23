@@ -20,10 +20,10 @@ jobs:
       - checkout
       - run:
           name: Deploy "API" to Heroku
-          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$API_APP_NAME.git deploy-to-heroku:master
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$API_APP_NAME.git master
       - run:
           name: Deploy "FRONT" to Heroku
-          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$FRONT_APP_NAME.git deploy-to-heroku:master
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$FRONT_APP_NAME.git master
 workflows:
   version: 2
   test_and_deploy:
@@ -34,4 +34,4 @@ workflows:
             - test
           filters:
             branches:
-              only: deploy-to-heroku
+              only: master

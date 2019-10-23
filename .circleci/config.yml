@@ -7,30 +7,31 @@ jobs:
     environment:
       GOPATH: /
       GO111MODULE: 'on'
+    # TODO: Add "name:" to explain commands
     steps:
       - checkout
       - run: go env
       - run: cd api/src && go build
-      - run: cd api/src && go test -v ./...
-  # deploy:
-  #   machine:
-  #     image: circleci/classic:edge
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Deploy "API" to Heroku
-  #         command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$API_APP_NAME.git deploy_heroku:master
-  #     - run:
-  #         name: Deploy "FRONT" to Heroku
-  #         command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$FRONT_APP_NAME.git deploy_heroku:master
+      - run: cd api/src && go test -v ./... # TODO: Research to change directory
+  deploy:
+    machine:
+      image: circleci/classic:edge
+    steps:
+      - checkout
+      - run:
+          name: Deploy "API" to Heroku
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$API_APP_NAME.git deploy-to-heroku:master
+      - run:
+          name: Deploy "FRONT" to Heroku
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$FRONT_APP_NAME.git deploy-to-heroku:master
 workflows:
   version: 2
   test_and_deploy:
     jobs:
       - test
-      # - deploy:
-      #     requires:
-      #       - test
-      #     filters:
-      #       branches:
-      #         only: deploy_heroku
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: deploy-to-heroku

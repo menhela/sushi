@@ -99,17 +99,13 @@ const copyUrl = () => {
   download: {
     background: '#46709a',
     border: 'none',
-    padding: 10,
+    padding: '15px 15px',
     color: '#fff',
-    fontSize: 16,
+    fontSize: 20,
     borderRadius: 5,
     cursor: 'pointer',
     width: '100%',
-    marginTop: 30,
-    '&:hover': {
-      background: '#003366',
-      opacity: 1,
-    }
+    marginTop: 30
   },
   linkContainer: {
     fontSize: 15,
@@ -152,11 +148,7 @@ const copyUrl = () => {
     fontWeight: 'bold',
     cursor: 'pointer',
     background: '#90cdc3',
-    border: 'none',
-    '&:hover': {
-      opacity: 1,
-      background: '#4689FF',
-    }
+    border: 'none'
   },
   date: {
     textAlign: 'right'

@@ -21,10 +21,7 @@ const AgreementButton = withStyles((theme) => ({
     },
     [theme.breakpoints.down("xs")]: {
       fontSize: 20,
-    },
-    '&:hover': {
-      background: '#46709a ',
-    },
+    }
   },
 }))((props) => {
   const {classes, onClick} = props

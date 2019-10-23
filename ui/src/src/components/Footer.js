@@ -27,10 +27,10 @@ const Footer = withStyles((theme) => ({
     color: '#fff',
   },
   prev: {
-    background: '#90cdc3',
+    background: '#5D737E',
   },
   next: {
-    background: '#46709a',
+    background: '#7BD389',
   },
 }))((props) => {
   const {classes, toNext, toPrev} = props

@@ -3,9 +3,10 @@ jobs:
   test:
     docker:
       - image: circleci/golang:1.12-stretch-node-browsers-legacy
-    working_directory: ~/repo/api/src
+    working_directory: ~/repo
     steps:
       - checkout
+      - run: cd api/src
       - run: go build
       - run: go test -v ./...
   # deploy:

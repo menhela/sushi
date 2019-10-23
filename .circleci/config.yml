@@ -11,7 +11,7 @@ jobs:
       - checkout
       - run: go env
       - run: cd api/src && go build
-      - run: go test -v ./...
+      - run: cd api/src && go test -v ./...
   # deploy:
   #   machine:
   #     image: circleci/classic:edge

@@ -9,8 +9,25 @@ const containUndefinedData = (state, guilts) => {
   return state === undefined || state.contentArray === undefined || guilts === undefined;
 };
 
-const savePdf = () => {
+const convertStyleForOutput = element => {
+  element.style.height ='297mm'
+  element.style.width='210mm'
+  element.style.padding='32mm 27mm 0 27mm'
+  element.style.fontSize=15
+}
+
+const convertStyleToOriginal = element => {
+  element.style.height ='auto'
+  element.style.width='90mm'
+  element.style.padding='0 9mm 0 9mm'
+  element.style.fontSize=11
+}
+
+const savePdf = width => {
   const element = document.getElementById('sheet');
+  if (width === 'xs') {
+    convertStyleForOutput(element)
+  }
   html2canvas(element, { allowTaint: true }).then(canvas => {
     const pdf = new jsPdf('p', 'mm', 'a4');
     const width = pdf.internal.pageSize.getWidth();
@@ -18,10 +35,16 @@ const savePdf = () => {
     pdf.addImage(canvas, 'JPEG', 0, 0, width, height);
     pdf.save('通告書.pdf');
   });
+  if (width === 'xs') {
+    convertStyleToOriginal(element)
+  }
 };
 
-const savePng = () => {
+const savePng = width => {
   const element = document.getElementById('sheet');
+  if (width === 'xs') {
+    convertStyleForOutput(element)
+  }
   html2canvas(element, { allowTaint: true, scale: 0.75 }).then(canvas => {
     const dataUrl = canvas.toDataURL();
     const element = document.createElement('a');
@@ -41,6 +64,9 @@ const savePng = () => {
       element.click();
     }
   });
+  if (width === 'xs') {
+    convertStyleToOriginal(element)
+  }
 };
 
 const execCopy = string => {
@@ -71,25 +97,8 @@ const copyUrl = () => {
   container: {
     background: '#616161',
     padding: 20,
-    overflow: 'scroll'
-  },
-  sheet: {
-    background: 'white',
-    margin: '5mm auto',
-    marginTop: 80,
-    overflow: 'hidden',
-    position: 'relative',
-    boxSizing: 'border-box',
-    pageBreakAfter: 'always',
-    /* 用紙サイズ A4 */
-    height: '297mm',
-    width: '210mm',
-    /* 余白サイズ */
-    paddingTop: '32mm',
-    paddingLeft: '27mm',
-    paddingRight: '27mm',
-    fontFamily: "'Noto Serif JP', serif",
-    fontSize: 15
+    overflow: 'scroll',
+    height: '100%',
   },
   buttons: {
     right: 30,
@@ -101,20 +110,27 @@ const copyUrl = () => {
     border: 'none',
     padding: 10,
     color: '#fff',
-    fontSize: 16,
     borderRadius: 5,
     cursor: 'pointer',
-    width: '100%',
     marginTop: 30,
     '&:hover': {
       background: '#003366',
       opacity: 1,
+    },
+    [theme.breakpoints.up('sm')]: {
+      width: '100%',
+      fontSize: 16,
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '45%',
+      marginRight: 2,
+      fontSize: 12,
     }
   },
   linkContainer: {
+    zIndex: 10000,
     fontSize: 15,
     position: 'absolute',
-    zIndex: 10,
     [theme.breakpoints.up('sm')]: {
       right: 100
     },
@@ -139,10 +155,6 @@ const copyUrl = () => {
     border: 'none',
     border: 'solid 1px #ccc'
   },
-  link: {
-    width: '100%',
-    textDecoration: 'none'
-  },
   copyButton: {
     width: 100,
     background: '#90cdc3',
@@ -158,50 +170,10 @@ const copyUrl = () => {
       background: '#4689FF',
     }
   },
-  date: {
-    textAlign: 'right'
-  },
-  assaulter: {
-    width: 230,
-    wordBreak: 'break-all'
-  },
-  victim: {
-    textAlign: 'right',
-    paddingLeft: 400,
-    wordBreak: 'break-all'
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: 40
-  },
-  summary: {
-    marginBottom: 30
-  },
-  subtitle: {
-    fontWeight: 'bold'
-  },
-  article: {
-    borderTop: '2px solid #000',
-    fontSize: 14
-  },
-  dotted: {
-    borderTop: 'dashed 1px #000'
-  },
-  border: {
-    borderTop: 'solid 2px #000',
-    height: 2
-  },
-  list: {
-    marginTop: 35,
-    marginBottom: 35
-  },
-  end: {
-    marginBottom: 50
-  }
 }))
 export default class Sheet extends React.Component {
   render() {
-    const { classes, location } = this.props;
+    const { classes, location, width } = this.props;
     const state = location.state;
     const guilts = location.guilts;
     const date = new Date();
@@ -228,57 +200,168 @@ export default class Sheet extends React.Component {
                   </div>
                 </>
               }
-              <button onClick={savePdf} className={classes.download}>
+              <button onClick={() => savePdf(width)} className={classes.download}>
                 PDFで保存する
               </button>
-              <button onClick={savePng} className={classes.download}>
+              <button onClick={() => savePng(width)} className={classes.download}>
                 PNGで保存する
               </button>
             </div>
-            <section className={classes.sheet} id="sheet">
-              <p className={classes.date}>{currentTime}</p>
-              <p className={classes.assaulter}>
-                {state.assaulterTwitterAccountName}@{state.assaulterTwitterId}
-              </p>
-              <p className={classes.victim}>
-                {state.victimTwitterAccountName}@{state.victimTwitterId}
-              </p>
-              <h1 className={classes.title}>通告書</h1>
-              <div className={classes.summary}>
-                <p className={classes.subtitle}>貴殿のSNSにおける投稿について</p>
-                <p>　貴殿は以下の投稿において、私に不利益を与えているため、直ちに当該投稿の削除を求める。</p>
-              </div>
-              <p>▼該当の投稿</p>
-              <div className={classes.article}>
-                {state.contentArray.map((d, index) => {
-                  return (
-                    <div key={index} className={index != 0 ? classes.dotted : ''}>
-                      <p>{d.content}</p>
-                      <p>
-                        <a className={classes.link} href={d.evidence_url} target="_blank">
-                          {d.evidence_url}
-                        </a>
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className={classes.border}></div>
-              <ol className={classes.list}>
-                {guilts.map((d, index) => {
-                  return (
-                    <li key={index}>
-                      これらの投稿は、{d.code}　{d.name}に抵触している可能性がある。
-                    </li>
-                  );
-                })}
-              </ol>
-              <p className={classes.end}>もし警告に応じない場合、本件についての告訴も含めた法的措置も辞さない。</p>
-              <p>以上</p>
-            </section>
+            <div>
+              <Result state={state} guilts={guilts} />
+            </div>
           </div>
         )}
       </>
     );
   }
 }
+
+const Result = withStyles((theme) => ({
+  sheet: {
+    background: 'white',
+    margin: '5mm auto',
+    marginTop: 80,
+    overflow: 'hidden',
+    position: 'relative',
+    boxSizing: 'border-box',
+    pageBreakAfter: 'always',
+    zIndex: 10,
+    fontFamily: "'Noto Serif JP', serif",
+    [theme.breakpoints.up('sm')]: {
+      /* 用紙サイズ A4 */
+      height: '297mm',
+      width: '210mm',
+      /* 余白サイズ */
+      paddingTop: '32mm',
+      paddingLeft: '27mm',
+      paddingRight: '27mm',
+      fontSize: 15,
+    },
+    [theme.breakpoints.down('xs')]: {
+      // height: '127mm',
+      width: '90mm',
+      paddingLeft: '9mm',
+      paddingRight: '9mm',
+      fontSize: 11,
+    }
+  },
+  date: {
+    textAlign: 'right'
+  },
+  assaulter: {
+    [theme.breakpoints.up('sm')]: {
+      width: 230,
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: 80,
+    },
+    wordBreak: 'break-all'
+  },
+  victim: {
+    textAlign: 'right',
+    [theme.breakpoints.up('sm')]: {
+      paddingLeft: 400,
+    },
+    wordBreak: 'break-all'
+  },
+  title: {
+    [theme.breakpoints.up('sm')]: {
+      marginBottom: 40
+    },
+    // [theme.breakpoints.down('xs')]: {
+    //   fontSize: 11
+    // },
+    textAlign: 'center',
+  },
+  summary: {
+    [theme.breakpoints.up('sm')]: {
+      marginBottom: 30
+    },
+  },
+  subtitle: {
+    fontWeight: 'bold'
+  },
+  article: {
+    borderTop: '2px solid #000',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 14
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 12
+    },
+  },
+  dotted: {
+    borderTop: 'dashed 1px #000'
+  },
+  border: {
+    borderTop: 'solid 2px #000',
+    height: 2
+  },
+  list: {
+    [theme.breakpoints.up('sm')]: {
+      marginTop: 35,
+      marginBottom: 35
+    },
+  },
+  end: {
+    [theme.breakpoints.up('sm')]: {
+      marginBottom: 50
+    },
+  },
+  link: {
+    width: '100%',
+    textDecoration: 'none'
+  },
+}))((props) => {
+  const {classes, state, guilts} = props
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const currentTime = year + '年' + month + '月' + day + '日';
+
+  return (
+    <section className={classes.sheet} id="sheet">
+      <p className={classes.date}>{currentTime}</p>
+      <p className={classes.assaulter}>
+        {state.assaulterTwitterAccountName}: @{state.assaulterTwitterId}
+      </p>
+      <p className={classes.victim}>
+        {state.victimTwitterAccountName}: @{state.victimTwitterId}
+      </p>
+      <h1 className={classes.title}>通告書</h1>
+      <div className={classes.summary}>
+        <p className={classes.subtitle}>貴殿のSNSにおける投稿について</p>
+        <p>　貴殿は以下の投稿において、私に不利益を与えているため、直ちに当該投稿の削除を求める。</p>
+      </div>
+      <p>▼該当の投稿</p>
+      <div className={classes.article}>
+        {state.contentArray.map((d, index) => {
+          return (
+            <div key={index} className={index != 0 ? classes.dotted : ''}>
+              <p>{d.content}</p>
+              <p>
+                <a className={classes.link} href={d.evidence_url} target="_blank">
+                  {d.evidence_url}
+                </a>
+              </p>
+            </div>
+          );
+        })}
+      </div>
+      <div className={classes.border}></div>
+      <ol className={classes.list}>
+        {guilts.map((d, index) => {
+          return (
+            <li key={index}>
+              これらの投稿は、{d.code}　{d.name}に抵触している可能性がある。
+            </li>
+          );
+        })}
+      </ol>
+      <p className={classes.end}>もし警告に応じない場合、本件についての告訴も含めた法的措置も辞さない。</p>
+      <p>以上</p>
+    </section>
+  )
+})

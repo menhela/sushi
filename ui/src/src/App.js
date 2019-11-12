@@ -11,7 +11,7 @@ import ReactGA from 'react-ga';
 export default class App extends React.Component {
   componentDidMount() {
     // const { pathname } = this.props.location;
-    const { pathname } = document.location;
+    const { pathname } = document.location.pathname;
     ReactGA.set({ page: pathname });
     ReactGA.pageview(pathname);
   }

@@ -4,8 +4,8 @@ import NavBar from './components/NavBar';
 import Top from './containers/Top';
 import Question from './containers/Question';
 import Sheet from './containers/Sheet';
+import SimpleSheet from './containers/SimpleSheet';
 import { Button, withStyles, withWidth } from '@material-ui/core';
-import Redirector from './containers/Redirector';
 import ReactGA from 'react-ga';
 
 export default class App extends React.Component {
@@ -32,7 +32,7 @@ export default class App extends React.Component {
           <Switch>
             <Route exact path="/question" component={Question} />
             <Route exact path="/sheet" component={Sheet} />
-            <Route exact path="/warning/:hashId" component={Redirector} />
+            <Route exact path="/warning/:hashId" component={SimpleSheet} />
             <Route path="/" component={Top} />
           </Switch>
         </Router>

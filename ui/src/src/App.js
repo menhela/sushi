@@ -6,8 +6,15 @@ import Question from './containers/Question';
 import Sheet from './containers/Sheet';
 import { Button, withStyles, withWidth } from '@material-ui/core';
 import Redirector from './containers/Redirector';
+import ReactGA from 'react-ga';
 
 export default class App extends React.Component {
+  componentDidMount() {
+    const { pathname } = document.location.pathname;
+    ReactGA.set({ page: pathname });
+    ReactGA.pageview(pathname);
+  }
+
   constructor(props) {
     super(props);
     this.state = {

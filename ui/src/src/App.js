@@ -1,12 +1,12 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import NavBar from "./components/NavBar";
-import Top from "./containers/Top";
-import Question from "./containers/Question";
-import Sheet from "./containers/Sheet";
-import { Button, withStyles, withWidth } from "@material-ui/core";
-import Redirector from "./containers/Redirector";
-import ReactGA from "react-ga";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import Top from './containers/Top';
+import Question from './containers/Question';
+import Sheet from './containers/Sheet';
+import { Button, withStyles, withWidth } from '@material-ui/core';
+import Redirector from './containers/Redirector';
+import ReactGA from 'react-ga';
 
 export default class App extends React.Component {
   componentDidMount() {

@@ -4,7 +4,7 @@ import App from './src/App';
 import ReactGA from 'react-ga';
 import createBrowserHistory from 'history/createBrowserHistory';
 
-ReactGA.initialize("UA-128421111-1");
+ReactGA.initialize("UA-152004554-1");
 const history = createBrowserHistory();
 history.listen(({ pathname }) => {
   ReactGA.set({ page: pathname });
